@@ -14,7 +14,9 @@
     <!-- Hero Section -->
     <header id="hero" role="banner">
         <div class="container hero-content">
-            <img src="assets/images/logo.png" alt="Logotipo Tu mejor descanso" class="logo">
+            <div class="logo-circle">
+                <img src="assets/images/logo.png" alt="Logotipo Tu mejor descanso" class="logo">
+            </div>
             <h1>Honramos los recuerdos con belleza y respeto</h1>
             <p class="subtitle">Souvenirs personalizados para rendir homenaje a quienes partieron.</p>
             <div class="cta-buttons">
@@ -48,14 +50,11 @@
                         <h3 id="producto2-titulo">Mini Urna Personalizada</h3>
                         <p>Pequeñas urnas para conservar una porción simbólica de cenizas, personalizables.</p>
                     </article>
-                    <!-- Ejemplo de producto comentado -->
-                    <!--
                     <article class="producto-item" aria-labelledby="producto3-titulo">
-                        <img src="assets/images/producto3.jpg" alt="Descripción producto 3">
-                        <h3 id="producto3-titulo">Título Producto 3</h3>
-                        <p>Descripción corta del producto 3.</p>
+                        <img src="assets/images/producto3.jpg" alt="Collar conmemorativo personalizado">
+                        <h3 id="producto3-titulo">Collar Conmemorativo</h3>
+                        <p>Elegante joya que puede contener un pequeño recuerdo o mensaje grabado especial.</p>
                     </article>
-                    -->
                 </div>
             </div>
         </section>
@@ -78,23 +77,43 @@
              </div>
         </section>
 
-        <!-- Testimonios -->
+        <!-- Testimonios con carrusel simple -->
         <section id="testimonios" class="section-padding section-background" aria-labelledby="testimonios-titulo">
             <div class="container">
                 <h2 id="testimonios-titulo">Lo que dicen nuestros clientes</h2>
-                <blockquote class="testimonio">
-                    <p>"El detalle que recibimos fue hermoso y superó nuestras expectativas. Un recuerdo tangible que nos reconforta. El trato fue muy humano y profesional en todo momento."</p>
-                    <cite>– Familia Gómez</cite>
-                </blockquote>
-                 <!-- Puedes añadir más testimonios aquí, quizás en un slider/carrusel si son muchos -->
+                <div class="testimonios-carrusel">
+                    <div class="testimonios-container">
+                        <blockquote class="testimonio active">
+                            <p>"El detalle que recibimos fue hermoso y superó nuestras expectativas. Un recuerdo tangible que nos reconforta. El trato fue muy humano y profesional en todo momento."</p>
+                            <cite>– Familia Gómez</cite>
+                        </blockquote>
+                        <blockquote class="testimonio">
+                            <p>"En un momento tan difícil, encontrar este servicio fue una bendición. El souvenir que crearon para mi padre es ahora un tesoro familiar que mantendrá viva su memoria."</p>
+                            <cite>– María Rodríguez</cite>
+                        </blockquote>
+                        <blockquote class="testimonio">
+                            <p>"La calidad y el detalle del trabajo es excepcional. Cada vez que miro el recuerdo de mi abuela, siento que una parte de ella sigue con nosotros."</p>
+                            <cite>– Carlos Mendoza</cite>
+                        </blockquote>
+                    </div>
+                    <div class="testimonios-nav">
+                        <button class="nav-prev" aria-label="Testimonio anterior"><span>&larr;</span></button>
+                        <div class="nav-indicators">
+                            <span class="indicator active" data-index="0"></span>
+                            <span class="indicator" data-index="1"></span>
+                            <span class="indicator" data-index="2"></span>
+                        </div>
+                        <button class="nav-next" aria-label="Testimonio siguiente"><span>&rarr;</span></button>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- Contacto -->
+        <!-- Contacto con diseño mejorado -->
         <section id="contacto" aria-labelledby="contacto-titulo">
             <div class="container section-padding">
                 <h2 id="contacto-titulo">Contáctanos</h2>
-                <p>Estamos aquí para ayudarte a crear un recuerdo significativo. Completa el formulario o escríbenos directamente.</p>
+                <p class="contact-intro">Estamos aquí para ayudarte a crear un recuerdo significativo. Completa el formulario o escríbenos directamente.</p>
                 <!-- El action="#" es un placeholder. Reemplazar con endpoint real o servicio (Formspree, etc.) -->
                 <form id="contact-form" class="contact-form" action="#" method="POST" novalidate>
                     <div class="form-group">

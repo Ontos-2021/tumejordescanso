@@ -102,6 +102,54 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // --- Funcionalidad del carrusel de testimonios ---
+    const testimonios = document.querySelectorAll('.testimonio');
+    const indicators = document.querySelectorAll('.indicator');
+    const prevBtn = document.querySelector('.nav-prev');
+    const nextBtn = document.querySelector('.nav-next');
+    let currentIndex = 0;
+
+    // Función para cambiar el testimonio activo
+    function showTestimonio(index) {
+        testimonios.forEach(item => item.classList.remove('active'));
+        indicators.forEach(item => item.classList.remove('active'));
+        
+        testimonios[index].classList.add('active');
+        indicators[index].classList.add('active');
+        currentIndex = index;
+    }
+
+    // Evento para los botones de navegación
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            let newIndex = currentIndex - 1;
+            if (newIndex < 0) newIndex = testimonios.length - 1;
+            showTestimonio(newIndex);
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            let newIndex = currentIndex + 1;
+            if (newIndex >= testimonios.length) newIndex = 0;
+            showTestimonio(newIndex);
+        });
+    }
+
+    // Evento para los indicadores
+    indicators.forEach(indicator => {
+        indicator.addEventListener('click', () => {
+            const index = parseInt(indicator.getAttribute('data-index'));
+            showTestimonio(index);
+        });
+    });
+
+    // Cambio automático cada 8 segundos
+    setInterval(() => {
+        let newIndex = currentIndex + 1;
+        if (newIndex >= testimonios.length) newIndex = 0;
+        showTestimonio(newIndex);
+    }, 8000);
 
     // --- Intersection Observer for Fade-in Animations (Ejemplo Opcional) ---
     /*
