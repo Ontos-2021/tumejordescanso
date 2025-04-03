@@ -3,38 +3,45 @@
 
 /* CSS Variables */
 :root {
-    --primary-bg-color: #fdfaf6; /* Beige muy suave casi blanco */
-    --secondary-bg-color: #f5f0e8; /* Beige un poco más oscuro */
-    --accent-color-light: #a0c4d8; /* Azul suave */
-    --accent-color-dark: #7a9db1;  /* Azul medio */
-    --text-color-dark: #3a3a3a;    /* Gris oscuro para texto */
-    --text-color-light: #6b6b6b;   /* Gris claro para subtítulos/texto secundario */
+    --primary-bg-color: #fdfaf6;    /* Beige muy suave casi blanco */
+    --secondary-bg-color: #f5f0e8;  /* Beige un poco más oscuro */
+    --accent-color-light: #a0c4d8;  /* Azul suave */
+    --accent-color-dark: #7a9db1;   /* Azul medio */
+    --text-color-dark: #3a3a3a;     /* Gris oscuro para texto */
+    --text-color-light: #6b6b6b;    /* Gris claro para subtítulos/texto secundario */
     --heading-font: 'Merriweather', serif;
     --body-font: 'Lato', sans-serif;
     --border-color: #e0d8cc;
+    --focus-ring-color: #5e869b; /* Un azul un poco más oscuro para el foco */
     --section-padding: 60px 0;
     --container-max-width: 1100px;
     --border-radius: 5px;
     --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    --transition-speed: 0.3s;
 }
 
 /* Basic Reset & Global Styles */
-* {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 html {
-    scroll-behavior: smooth; /* Scroll suave nativo */
+    scroll-behavior: smooth;
+    font-size: 100%; /* 16px base */
 }
 
 body {
     font-family: var(--body-font);
     color: var(--text-color-dark);
     background-color: var(--primary-bg-color);
-    line-height: 1.7;
-    font-size: 16px;
+    line-height: 1.65; /* Ligeramente más espacio */
+    font-size: 1rem; /* 16px */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -42,37 +49,61 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-color-dark);
     margin-bottom: 1rem;
     line-height: 1.3;
+    font-weight: 700;
 }
 
-h1 { font-size: 2.8rem; font-weight: 700; }
-h2 { font-size: 2.2rem; font-weight: 700; text-align: center; margin-bottom: 2.5rem; }
-h3 { font-size: 1.5rem; font-weight: 700; color: var(--accent-color-dark); }
+h1 { font-size: clamp(2.2rem, 5vw, 2.8rem); } /* Responsive heading */
+h2 { font-size: clamp(1.8rem, 4vw, 2.2rem); text-align: center; margin-bottom: 2.5rem; }
+h3 { font-size: clamp(1.3rem, 3vw, 1.5rem); color: var(--accent-color-dark); }
 
 p {
     margin-bottom: 1rem;
     color: var(--text-color-light);
+    max-width: 65ch; /* Limita ancho de línea para legibilidad */
 }
+/* Centered paragraphs */
+#sobre-nosotros p, #contacto p:first-of-type {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
 
 a {
     color: var(--accent-color-dark);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: color var(--transition-speed) ease;
 }
 
 a:hover {
     color: var(--accent-color-light);
 }
 
+/* Style for keyboard navigation focus */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--focus-ring-color);
+    outline-offset: 2px;
+    border-radius: var(--border-radius); /* Match border radius */
+}
+/* Remove default outline when focus-visible is supported */
+:focus:not(:focus-visible) {
+    outline: none;
+}
+
+
 img {
     max-width: 100%;
     height: auto;
-    display: block;
+    display: block; /* Already prevents bottom space issues */
 }
 
 .container {
+    width: 90%; /* Use percentage for better fluidity */
     max-width: var(--container-max-width);
     margin: 0 auto;
-    padding: 0 20px; /* Padding lateral para pantallas pequeñas */
 }
 
 .section-padding {
@@ -81,38 +112,53 @@ img {
 
 .section-background {
     background-color: var(--secondary-bg-color);
-    /* Opcional: Añadir imagen de fondo con overlay */
-    /*
-    background-image: linear-gradient(rgba(253, 250, 246, 0.9), rgba(253, 250, 246, 0.9)), url('../images/background.jpg');
-    background-size: cover;
-    background-position: center center;
-    background-attachment: fixed;
-    */
+    /* Consider using background image if needed */
+    /* background-image: linear-gradient(rgba(253, 250, 246, 0.95), rgba(253, 250, 246, 0.95)), url('../images/background.jpg'); */
+    /* background-size: cover; */
+    /* background-position: center; */
+    /* background-attachment: fixed; */ /* Be cautious with fixed backgrounds on mobile */
 }
+
+/* Utility class to hide visually but keep accessible */
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 
 /* Buttons */
 .btn {
     display: inline-block;
-    padding: 12px 28px;
+    padding: 0.75rem 1.75rem; /* Use rem */
     border-radius: var(--border-radius);
     font-weight: 700;
     text-align: center;
-    transition: all 0.3s ease;
     cursor: pointer;
     font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    margin: 5px;
-    border: none;
+    margin: 0.3rem;
+    border: 2px solid transparent; /* Base border */
+    transition: background-color var(--transition-speed) ease,
+                color var(--transition-speed) ease,
+                transform var(--transition-speed) ease,
+                box-shadow var(--transition-speed) ease;
 }
 
 .btn-primary {
     background-color: var(--accent-color-dark);
     color: #fff;
+    border-color: var(--accent-color-dark);
 }
 
 .btn-primary:hover {
     background-color: var(--accent-color-light);
+    border-color: var(--accent-color-light);
     color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -121,7 +167,7 @@ img {
 .btn-secondary {
     background-color: transparent;
     color: var(--accent-color-dark);
-    border: 2px solid var(--accent-color-dark);
+    border-color: var(--accent-color-dark);
 }
 
 .btn-secondary:hover {
@@ -132,14 +178,14 @@ img {
 
 /* Hero Section */
 #hero {
-    background: linear-gradient(rgba(58, 58, 58, 0.6), rgba(58, 58, 58, 0.6)), url('../images/hero.jpg') no-repeat center center/cover;
+    background: linear-gradient(rgba(58, 58, 58, 0.65), rgba(58, 58, 58, 0.65)), url('../images/hero.jpg') no-repeat center center/cover;
     color: #fff;
-    height: 100vh; /* Ocupa toda la altura de la pantalla */
+    min-height: 95vh; /* Use min-height instead of height */
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 0 20px;
+    padding: 4rem 1rem; /* Add some padding */
 }
 
 .hero-content {
@@ -147,42 +193,47 @@ img {
 }
 
 #hero .logo {
-    max-width: 150px; /* Ajusta según tu logo */
+    max-width: clamp(100px, 20vw, 150px); /* Responsive logo size */
     margin: 0 auto 2rem auto;
 }
 
 #hero h1 {
     color: #fff;
     margin-bottom: 1rem;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
 }
 
 #hero .subtitle {
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.9);
-    margin-bottom: 2rem;
+    font-size: clamp(1rem, 3vw, 1.2rem); /* Responsive subtitle */
+    color: rgba(255, 255, 255, 0.95);
+    margin-bottom: 2.5rem;
     font-weight: 400;
+    max-width: 60ch; /* Limit width */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .cta-buttons {
     margin-top: 2rem;
+    display: flex; /* Use flex for better alignment */
+    justify-content: center;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 0.5rem; /* Space between buttons */
 }
 
 /* Sobre Nosotros Section */
 #sobre-nosotros p {
     max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: center;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--text-color-dark);
 }
 
 /* Galería de Productos */
 .galeria-productos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 30px;
+    /* More robust responsive grid */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+    gap: clamp(1.5rem, 4vw, 2rem); /* Responsive gap */
 }
 
 .producto-item {
@@ -191,23 +242,27 @@ img {
     overflow: hidden;
     box-shadow: var(--box-shadow);
     text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex; /* Use flex for better internal layout */
+    flex-direction: column;
+    transition: transform var(--transition-speed) ease,
+                box-shadow var(--transition-speed) ease;
 }
 
 .producto-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-5px) scale(1.02); /* Slight scale on hover */
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
 }
 
 .producto-item img {
     width: 100%;
-    height: 250px; /* Altura fija para las imágenes */
-    object-fit: cover; /* Asegura que la imagen cubra el espacio sin deformarse */
+    aspect-ratio: 4 / 3; /* Maintain aspect ratio */
+    object-fit: cover;
     border-bottom: 1px solid var(--border-color);
 }
 
 .producto-item h3 {
-    margin-top: 1rem;
+    margin-top: 1.2rem;
+    margin-bottom: 0.5rem; /* Less space below h3 */
     font-size: 1.3rem;
 }
 
@@ -215,6 +270,8 @@ img {
     padding: 0 1.5rem 1.5rem 1.5rem;
     font-size: 0.95rem;
     color: var(--text-color-light);
+    margin-bottom: 0; /* Remove default p margin */
+    flex-grow: 1; /* Allow p to take remaining space if needed */
 }
 
 
@@ -224,13 +281,14 @@ img {
     counter-reset: proceso-counter;
     max-width: 700px;
     margin: 0 auto;
+    padding-left: 0; /* Remove default padding */
 }
 
 .proceso-lista li {
     counter-increment: proceso-counter;
     margin-bottom: 2rem;
     position: relative;
-    padding-left: 50px; /* Espacio para el número */
+    padding-left: 55px; /* Increased space for number */
     font-size: 1.05rem;
 }
 
@@ -239,8 +297,8 @@ img {
     position: absolute;
     left: 0;
     top: 0;
-    width: 35px;
-    height: 35px;
+    width: 38px; /* Slightly larger */
+    height: 38px;
     background-color: var(--accent-color-light);
     color: #fff;
     border-radius: 50%;
@@ -249,6 +307,7 @@ img {
     align-items: center;
     font-weight: 700;
     font-family: var(--heading-font);
+    font-size: 1.1rem; /* Slightly larger font */
 }
 
 .proceso-lista li strong {
@@ -261,7 +320,7 @@ img {
 /* Testimonios */
 .testimonio {
     background-color: var(--primary-bg-color);
-    padding: 2rem;
+    padding: clamp(1.5rem, 4vw, 2.5rem); /* Responsive padding */
     border-left: 5px solid var(--accent-color-light);
     border-radius: var(--border-radius);
     max-width: 700px;
@@ -272,8 +331,9 @@ img {
 .testimonio p {
     font-style: italic;
     margin-bottom: 1rem;
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 2.5vw, 1.1rem);
     color: var(--text-color-dark);
+    max-width: none; /* Override max-width for blockquote */
 }
 
 .testimonio cite {
@@ -282,14 +342,15 @@ img {
     font-weight: 700;
     color: var(--text-color-light);
     font-style: normal;
+    margin-top: 1rem;
 }
 
 /* Contact Form */
 .contact-form {
     max-width: 600px;
     margin: 2rem auto;
-    background-color: #fff; /* Fondo blanco para destacar el formulario */
-    padding: 2rem;
+    background-color: #fff;
+    padding: clamp(1.5rem, 5vw, 2.5rem); /* Responsive padding */
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
 }
@@ -303,30 +364,34 @@ img {
     margin-bottom: 0.5rem;
     font-weight: 700;
     color: var(--text-color-dark);
+    cursor: pointer; /* Indicate label is clickable */
 }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group textarea {
     width: 100%;
-    padding: 12px;
+    padding: 0.8rem 1rem; /* Use rem */
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     font-family: var(--body-font);
     font-size: 1rem;
     background-color: var(--primary-bg-color);
-    transition: border-color 0.3s ease;
+    transition: border-color var(--transition-speed) ease,
+                box-shadow var(--transition-speed) ease;
+    line-height: 1.5; /* Ensure consistent line height */
 }
-
-.form-group input[type="text"]:focus,
-.form-group input[type="email"]:focus,
-.form-group textarea:focus {
-    outline: none;
-    border-color: var(--accent-color-dark);
+/* Use :focus-visible for inputs too */
+.form-group input[type="text"]:focus-visible,
+.form-group input[type="email"]:focus-visible,
+.form-group textarea:focus-visible {
+    outline: none; /* Remove default, use custom */
+    border-color: var(--focus-ring-color);
+    box-shadow: 0 0 0 2px rgba(var(--focus-ring-color), 0.3); /* Subtle glow */
 }
 
 .form-group textarea {
-    resize: vertical; /* Permite redimensionar verticalmente */
+    resize: vertical;
     min-height: 120px;
 }
 
@@ -334,83 +399,82 @@ img {
     display: block;
     width: 100%;
     margin-top: 1rem;
+    padding: 0.85rem 1.75rem; /* Slightly larger padding */
 }
 
 .contact-info {
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 2.5rem;
 }
 
 .contact-info p {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--text-color-dark);
 }
 
 /* Footer */
 #footer {
     background-color: var(--text-color-dark);
-    color: rgba(255, 255, 255, 0.7);
-    padding: 25px 0;
+    color: rgba(255, 255, 255, 0.75); /* Slightly more contrast */
+    padding: 1.8rem 1rem; /* Use rem */
     text-align: center;
-    margin-top: 40px; /* Separación del último elemento */
+    margin-top: 3rem; /* More separation */
     font-size: 0.9rem;
 }
 
 #footer p {
+    margin-bottom: 0.5rem;
+}
+#footer p:last-child {
     margin-bottom: 0;
 }
 
 #footer a {
     color: rgba(255, 255, 255, 0.9);
+    text-decoration: underline; /* Make links clearer in footer */
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
 }
 
-#footer a:hover {
+#footer a:hover,
+#footer a:focus-visible {
     color: #fff;
+    text-decoration-thickness: 2px; /* Thicker underline on hover/focus */
 }
 
-/* Responsive Design */
-@media (max-width: 992px) {
-    h1 { font-size: 2.5rem; }
-    h2 { font-size: 2rem; }
-    .container { max-width: 90%; }
-}
 
+/* Responsive Design Adjustments */
 @media (max-width: 768px) {
     :root { --section-padding: 50px 0; }
-    h1 { font-size: 2.2rem; }
-    h2 { font-size: 1.8rem; margin-bottom: 2rem; }
-    body { font-size: 15px; }
+    body { font-size: 0.95rem; } /* Slightly smaller base font */
 
-    #hero { height: auto; min-height: 80vh; padding: 80px 20px; } /* Ajuste altura hero */
-    #hero .logo { max-width: 120px; }
-    #hero .subtitle { font-size: 1.1rem; }
+    #hero { min-height: 70vh; }
 
-    .galeria-productos {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 20px;
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .cta-buttons .btn {
+        width: 80%;
+        max-width: 300px; /* Limit max width */
     }
 
-    .proceso-lista { padding-left: 20px; } /* Ajuste padding lista proceso */
-    .proceso-lista li { padding-left: 45px; }
-    .proceso-lista li::before { width: 30px; height: 30px; font-size: 0.9rem; }
+    .proceso-lista li { padding-left: 50px; }
+    .proceso-lista li::before { width: 35px; height: 35px; font-size: 1rem; }
 
     .contact-form { padding: 1.5rem; }
 }
 
 @media (max-width: 576px) {
-    h1 { font-size: 1.9rem; }
-    h2 { font-size: 1.6rem; }
-    .btn { padding: 10px 20px; font-size: 0.9rem; }
-    .cta-buttons { display: flex; flex-direction: column; align-items: center; }
-    .cta-buttons .btn { width: 80%; max-width: 250px; margin-bottom: 10px;}
+     .btn { padding: 0.7rem 1.4rem; font-size: 0.9rem; }
 
-    .galeria-productos {
-        grid-template-columns: 1fr; /* Una columna en móviles */
-    }
-    .producto-item img { height: 200px; }
+     .galeria-productos {
+        /* Already handled by auto-fit, but ensure single column if needed */
+        grid-template-columns: 1fr;
+     }
+     .producto-item img { aspect-ratio: 16 / 10; } /* Adjust aspect ratio if needed */
 
-    .testimonio { padding: 1.5rem; }
-    .testimonio p { font-size: 1rem; }
+     .testimonio { padding: 1.5rem; }
 
-    .contact-form { width: 95%; margin-left: auto; margin-right: auto; }
+     .contact-form { width: 100%; } /* Take full width within container padding */
 }
